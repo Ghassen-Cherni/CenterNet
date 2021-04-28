@@ -131,10 +131,10 @@ def train_loop(model, scheduler_name=None, epochs=10):
             scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=1e-2, epochs=epochs, steps_per_epoch=181,
                                                             three_phase=True)
     logs = []
+    fig, axs = plt.subplots(3, 3)
     for epoch in range(epochs):
         logs = train_model(epoch, scheduler=scheduler, epochs=epochs, optimizer=optimizer, logs=logs)
         losts_arr = np.array(losts)
-        fig, axs = plt.subplots(3, 3)
         axs[0, 0].plot(losts_arr[:,0], losts_arr[:,1])
         axs[0, 0].set_title('lr')
         axs[0, 1].plot(losts_arr[:,0], losts_arr[:,2])
@@ -169,24 +169,29 @@ if __name__ == '__main__':
     train_data = train[:len_train]
     validation_data = train[len_train:]
 
-    dictionnary_labels_per_image = preprocess(train, args.train_dir)
-    traindataset = MyDataset(img_id=train.image_id.values, augment_data=args.augment_data, train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
+    if args.dataset == "Kuzushiji":
+        dictionnary_labels_per_image = preprocess(train, args.train_dir)
+        traindataset = MyDataset(img_id=train.image_id.values, augment_data=args.augment_data, train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
+        validationdataset = MyDataset(validation_data.image_id.values, augment_data=args.augment_data,
+                                      train_images=args.train_dir,
+                                      dictionnary_labels_per_image=dictionnary_labels_per_image)
+        testdataset = DatasetTest(img_id=os.listdir(args.test_dir.replace('/', '')), test_dir=args.test_dir)
 
-#   if arg.dataset == "VOC":
-#         traindataset = VOCDataset.VOCDataset(path_to_voc, "train", processed_annotations="VOC_processed_train.json")
-#         valdataset = VOCDataset.VOCDataset(path_to_voc, "val", processed_annotations="VOC_processed_val.json")
-#         testdataset = VOCDataset.VOCDataset(path_to_voc, "test", processed_annotations="VOC_processed_test.json")
+
+    elif arg.dataset == "VOC":
+        path_to_voc=""
+        traindataset = VOCDataset.VOCDataset(path_to_voc, "train", processed_annotations="VOC_processed_train.json")
+        validationdataset = VOCDataset.VOCDataset(path_to_voc, "val", processed_annotations="VOC_processed_val.json")
+        testdataset = VOCDataset.VOCDataset(path_to_voc, "test", processed_annotations="VOC_processed_test.json")
 
     ## Pour le validation_loadr il faut que data augment soit tjr false
 
-    validationdataset = MyDataset(validation_data.image_id.values, augment_data=args.augment_data, train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
     validation_loader = torch.utils.data.DataLoader(validationdataset, batch_size=20, shuffle=True, num_workers=6,
                                                     pin_memory=True)
     ### Change number of workers to 4 and set pin_memory = True
     ### If you want a variable to not use graph tree use .detach() insted of .numpy() or .float()
     train_loader = torch.utils.data.DataLoader(traindataset, batch_size=args.batch_size, shuffle=True,
                                                num_workers=args.num_workers, pin_memory=True)
-    testdataset = DatasetTest(img_id=os.listdir(args.test_dir.replace('/','')), test_dir= args.test_dir)
     test_loader = torch.utils.data.DataLoader(testdataset, batch_size=args.batch_size, shuffle=False,
                                               num_workers=args.num_workers, pin_memory=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -205,4 +210,3 @@ if __name__ == '__main__':
     logs_training = train_loop(model, scheduler_name=None, epochs=epochs)
     with open('training_log.pickle', 'wb') as handle:
         pickle.dump(logs_training, handle, protocol=pickle.HIGHEST_PROTOCOL)
-

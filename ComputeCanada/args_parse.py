@@ -7,6 +7,8 @@ def parse_args():
     parser.add_argument('--lr', default=1e-3, type=float, help='Value of the learning rate')
     parser.add_argument('--batch_size', default=20, type=int, help='Batch size to process the data')
     parser.add_argument('--num_workers', default=4, type=int, help='The total number of workers')
+    parser.add_argument('--dataset', default='Kuzushiji', type=str,
+                        help='Choose between Kuzushiji or VOC')
     parser.add_argument('--train_file', default='train.csv', type=str,
                         help='Name of the file to create the dictionnary of the train dataset')
     parser.add_argument('--train_dir', default='train_images/', type=str,

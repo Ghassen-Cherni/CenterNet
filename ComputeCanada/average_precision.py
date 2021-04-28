@@ -57,6 +57,8 @@ def get_resized_bboxes(hm, reg, min_distance, status):
         off_x, off_y, size_x, size_y = reg[:, y, x]
         off_x *= ratio_x
         off_y *= ratio_y
+        size_x *= 2*ratio_x
+        size_y *= 2*ratio_y
         y = ratio_y * y + off_y
         x = ratio_x * x + off_x
         if status == "gt":

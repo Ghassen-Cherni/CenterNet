@@ -1,20 +1,19 @@
 import numpy as np
 
-def gaussian_heatmap(sigma, center_x, center_y, heatmap):
-    #     for i in range(heatmap.shape[0]):
-    #         for j in range(heatmap.shape[1]):
-    #             gaussian = np.exp(-((j-center_x)*(j-center_x)+(i-center_y)*(i-center_y))/(2*sigma*sigma))
-    #             if gaussian > heatmap[i, j]:
-    #                 heatmap[i,j]=gaussian
 
-    point = np.exp(-(np.arange(128) - center_x) ** 2 / (2 * sigma * sigma)).reshape(1, -1
-                                                                                    ) * np.exp(
-        -(np.arange(128) - center_y) ** 2 / (2 * sigma * sigma)).reshape(-1, 1)
+def gaussian_heatmap(center_x, center_y, size_x, size_y, heatmap):
+
+    sigma_x = size_x / 10
+    sigma_y = size_y / 10
+    point = np.exp(-(np.arange(128) - center_x) ** 2 / (2 * sigma_x * sigma_x)).reshape(1, -1
+                                                                                        ) * np.exp(
+        -(np.arange(128) - center_y) ** 2 / (2 * sigma_y * sigma_y)).reshape(-1, 1)
     heatmap = np.maximum(heatmap, point)
     return heatmap
 
 
-def generate_heatmap_offset(image_id, sigma, dictionnary_labels_per_image):
+def generate_heatmap_offset(image_id, dictionnary_labels_per_image):
+
     heatmap = np.zeros((128, 128))
     offset_x = np.zeros((128, 128))
     offset_y = np.zeros((128, 128))
@@ -33,10 +32,12 @@ def generate_heatmap_offset(image_id, sigma, dictionnary_labels_per_image):
         center_x_resized_int = int(center_x_resized_float)
         center_y_resized_int = int(center_y_resized_float)
 
-        heatmap = gaussian_heatmap(sigma, center_x_resized_int, center_y_resized_int, heatmap)
+        heatmap = gaussian_heatmap(center_x_resized_int,
+                                   center_y_resized_int, bbox[i][2] / img_shape[1] * 128,
+                                   bbox[i][3] / img_shape[0] * 128, heatmap)
         offset_x[center_y_resized_int, center_x_resized_int] = center_x_resized_float - center_x_resized_int
         offset_y[center_y_resized_int, center_x_resized_int] = center_y_resized_float - center_y_resized_int
-        object_size_x[center_y_resized_int, center_x_resized_int] = (bbox[i][2] // 2)
-        object_size_y[center_y_resized_int, center_x_resized_int] = (bbox[i][3] // 2)
+        object_size_x[center_y_resized_int, center_x_resized_int] = ((bbox[i][2] / img_shape[1] * 128) / 2)
+        object_size_y[center_y_resized_int, center_x_resized_int] = ((bbox[i][3] / img_shape[0] * 128) / 2)
 
     return heatmap, offset_x, offset_y, object_size_x, object_size_y

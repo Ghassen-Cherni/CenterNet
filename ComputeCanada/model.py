@@ -3,7 +3,9 @@ import torch
 import torchvision
 import torch.nn.functional as F
 
+
 class double_conv(nn.Module):
+
     '''(conv => BN => ReLU) * 2'''
 
     def __init__(self, in_ch, out_ch):
@@ -23,6 +25,7 @@ class double_conv(nn.Module):
 
 
 class up(nn.Module):
+
     def __init__(self, in_ch, out_ch, bilinear=True):
         super(up, self).__init__()
         if bilinear:
@@ -48,6 +51,7 @@ class up(nn.Module):
 
 
 class centernet(nn.Module):
+
     def __init__(self, n_classes=1, model_name="resnet18"):
         super(centernet, self).__init__()
         # create backbone.
@@ -66,8 +70,10 @@ class centernet(nn.Module):
         self.up3 = up(256, 256)
         # output classification
         self.outc = nn.Conv2d(256, n_classes, 1)
-        # output residue
+        # output residue box size
         self.outr = nn.Conv2d(256, 2, 1)
+        # output residue offset
+        self.outo = nn.Conv2d(256, 2, 1)
 
     def forward(self, x):
         batch_size = x.shape[0]
@@ -80,4 +86,5 @@ class centernet(nn.Module):
         x = self.up3(x)
         outc = self.outc(x)
         outr = self.outr(x)
-        return outc, outr
+        outo = self.outo(x)
+        return outc, outr, outo

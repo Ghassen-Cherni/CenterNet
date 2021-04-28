@@ -1,7 +1,10 @@
 import cv2
 
+
 def preprocess(train, file_directory):
-    #### Ici on rempli un dictionnaire avec les labels pour chaque image
+
+    # Ici on rempli un dictionnaire avec les labels pour chaque image
+
     dictionnary_labels_per_image = {}
     for image_id in train['image_id'].values:
         size = cv2.imread(file_directory+'{}.jpg'.format(image_id)).shape

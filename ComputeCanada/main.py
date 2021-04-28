@@ -15,6 +15,8 @@ import pickle
 from sklearn.utils import shuffle
 from average_precision import *
 import numpy as np
+import VOCDataset
+
 args = parse_args()
 
 
@@ -169,6 +171,11 @@ if __name__ == '__main__':
 
     dictionnary_labels_per_image = preprocess(train, args.train_dir)
     traindataset = MyDataset(img_id=train.image_id.values, augment_data=args.augment_data, train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
+
+#   if arg.dataset == "VOC":
+#         traindataset = VOCDataset.VOCDataset(path_to_voc, "train", processed_annotations="VOC_processed_train.json")
+#         valdataset = VOCDataset.VOCDataset(path_to_voc, "val", processed_annotations="VOC_processed_val.json")
+#         testdataset = VOCDataset.VOCDataset(path_to_voc, "test", processed_annotations="VOC_processed_test.json")
 
     ## Pour le validation_loadr il faut que data augment soit tjr false
 

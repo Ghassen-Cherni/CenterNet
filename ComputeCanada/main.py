@@ -29,12 +29,12 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
     running_regr = 0.0
     running_offset = 0.0
     running_loss_val = 0.0
-    t = tqdm(train_loader)
-    s = tqdm(validation_loader)
+    #t = tqdm(train_loader)
+    #s = tqdm(validation_loader)
     rd = np.random.rand()
     precision_train = 0.0
     precision_val = 0.0
-    for idx, (img, index, hm, regr, offset) in enumerate(t):
+    for (img, index, hm, regr, offset) in train_loader:
         # send to gpu
         img = img.to(device)
         hm_gt = hm.to(device)
@@ -58,14 +58,20 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
         ### Precision calculation
         reg = torch.cat((offset_gt, regr_gt), 1)
         reg_pred = torch.cat([offset, regr], 1)
-        precision_train += get_average_precision(hm_gt.detach(), reg.detach(), hm.detach(), reg_pred.detach(), 5,
-                                                 0.4) * len(index) / len(train_loader)
+        if epoch%10 == 0:
+            precision_train += get_average_precision(hm_gt.detach(), reg.detach(), hm.detach(), reg_pred.detach(), 5, 0.4)
+        else:
+            precision_train = 0
 
         loss.backward()
         optimizer.step()
 
-        t.set_description(
-            f't (l={running_loss / (idx + 1):.3f})(m={running_mask / (idx + 1):.4f})(r={running_regr / (idx + 1):.4f})(o={running_offset / (idx + 1):.4f})')
+        if type(scheduler)==torch.optim.lr_scheduler.OneCycleLR:
+            scheduler.step()
+            
+
+        #t.set_description(
+        #    f't (l={running_loss / (idx + 1):.3f})(m={running_mask / (idx + 1):.4f})(r={running_regr / (idx + 1):.4f})(o={running_offset / (idx + 1):.4f})')
 
     print('learning rate : ', optimizer.param_groups[0]['lr'])
     print('train loss : {:.4f}'.format(running_loss / len(train_loader)))
@@ -76,7 +82,7 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
     # save logs
 
     with torch.no_grad():
-        for idx, (img, index, hm, regr, offset) in enumerate(s):
+        for img, index, hm, regr, offset in validation_loader:
             # send to gpu
             img = img.to(device)
             hm_gt = hm.to(device)
@@ -84,7 +90,7 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
             offset_gt = offset.to(device)
 
             # run model
-            hm, regr, offset = model(img)
+            hm, regr, offset = model(img.float())
             preds = torch.cat((hm, regr, offset), 1)
 
             loss_validation, mask_loss_validation, regr_loss_validation, offset_loss_validation = centerloss(preds,
@@ -94,9 +100,14 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
             running_loss_val += loss_validation
             reg = torch.cat((offset_gt, regr_gt), 1)
             reg_pred = torch.cat([offset, regr], 1)
-            precision_val += get_average_precision(hm_gt, reg, hm, reg_pred, 5, 0.4) * len(index) / len(
-                validation_loader)
+            
+            if epoch%10 == 0:
+                precision_val += get_average_precision(hm_gt, reg, hm, reg_pred, 5, 0.4)
+            else:
+                precision_val = 0
 
+    precision_val /= len(validation_loader)
+    precision_train /= len(train_loader)
     log_epoch = {'epoch': epoch + 1, 'lr': optimizer.state_dict()['param_groups'][0]['lr'],
                  'loss': running_loss / len(train_loader), "mask": running_mask / (len(train_loader)),
                  "regr": running_regr / (len(train_loader)), 'offset': running_offset / (len(train_loader)),
@@ -114,46 +125,49 @@ def train_model(epoch, optimizer, scheduler=None, epochs=10, logs=[]):
                  , running_loss_val / (len(validation_loader))
                  , precision_val]
                  )
-    if scheduler is not None:
+
+    if type(scheduler)==torch.optim.lr_scheduler.CosineAnnealingWarmRestarts:
         scheduler.step()
     return logs
 
 
 def train_loop(model, scheduler_name=None, epochs=10):
-    if scheduler_name is None:
+    if scheduler_name is None or scheduler_name == 'None':
         optimizer = optim.Adam(model.parameters(), lr=1e-3)
         scheduler = None
     else:
-        optimizer = optim.SGD(model.parameters(), lr=1e-2)
+        optimizer = optim.SGD(model.parameters(), lr=0.05)
         if scheduler_name == 'cosine':
             scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=3, eta_min=1e-3)
         elif scheduler_name == 'one_cycle':
-            scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=1e-2, epochs=epochs, steps_per_epoch=181,
+            scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.05, epochs=epochs, steps_per_epoch=181,
                                                             three_phase=True)
     logs = []
     fig, axs = plt.subplots(3, 3)
     for epoch in range(epochs):
+        
         logs = train_model(epoch, scheduler=scheduler, epochs=epochs, optimizer=optimizer, logs=logs)
-        losts_arr = np.array(losts)
-        axs[0, 0].plot(losts_arr[:,0], losts_arr[:,1])
-        axs[0, 0].set_title('lr')
-        axs[0, 1].plot(losts_arr[:,0], losts_arr[:,2])
-        axs[0, 1].set_title('loss')
-        axs[0, 2].plot(losts_arr[:,0], losts_arr[:,3])
-        axs[0, 2].set_title('mask')
-        axs[1, 0].plot(losts_arr[:,0], losts_arr[:,4])
-        axs[1, 0].set_title('rg')
-        axs[1, 1].plot(losts_arr[:,0], losts_arr[:,5])
-        axs[1, 1].set_title('offset')
-        axs[1, 2].plot(losts_arr[:,0], losts_arr[:,6])
-        axs[1, 2].set_title('precision_train')
-        axs[2, 0].plot(losts_arr[:,0], losts_arr[:,7])
-        axs[2, 0].set_title('loss_validation')
-        axs[2, 1].plot(losts_arr[:,0], losts_arr[:,8])
-        axs[2, 1].set_title('precision_val')
-        fig.savefig("Losts.png")
+        
+        if epoch%5==0:
+            losts_arr = np.array(losts)
+            axs[0, 0].plot(losts_arr[:,0], losts_arr[:,2])
+            axs[0, 0].set_title('loss')
+            axs[0, 2].plot(losts_arr[:,0], losts_arr[:,3])
+            axs[0, 2].set_title('mask')
+            axs[1, 0].plot(losts_arr[:,0], losts_arr[:,4])
+            axs[1, 0].set_title('rg')
+            axs[1, 2].plot(losts_arr[:,0], losts_arr[:,5])
+            axs[1, 2].set_title('offset')
+            axs[2, 0].plot(losts_arr[:,0], losts_arr[:,6])
+            axs[2, 0].set_title('precision_train')
+            axs[2, 1].plot(losts_arr[:,0], losts_arr[:,7])
+            axs[2, 1].set_title('loss_validation')
+            axs[2, 2].plot(losts_arr[:,0], losts_arr[:,8])
+            axs[2, 2].set_title('precision_val')
+            fig.tight_layout()
+            fig.savefig("Losts_"+str(args.file_name_save)+".png")
 
-        torch.save(model.state_dict(), "model")
+        torch.save(model.state_dict(), "model_"+str(args.file_name_save))
         gc.collect()
     return logs
 # Press the green button in the gutter to run the script.
@@ -171,15 +185,15 @@ if __name__ == '__main__':
 
     if args.dataset == "Kuzushiji":
         dictionnary_labels_per_image = preprocess(train, args.train_dir)
-        traindataset = MyDataset(img_id=train.image_id.values, augment_data=args.augment_data, train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
-        validationdataset = MyDataset(validation_data.image_id.values, augment_data=args.augment_data,
+        traindataset = MyDataset(img_id=train.image_id.values, augment_data=(str.lower(args.augment_data)=='true'), train_images=args.train_dir, dictionnary_labels_per_image=dictionnary_labels_per_image)
+        validationdataset = MyDataset(validation_data.image_id.values, augment_data=(str.lower(args.augment_data)=='true'),
                                       train_images=args.train_dir,
                                       dictionnary_labels_per_image=dictionnary_labels_per_image)
-        testdataset = DatasetTest(img_id=os.listdir(args.test_dir.replace('/', '')), test_dir=args.test_dir)
+        testdataset = DatasetTest(img_id=os.listdir(args.test_dir), test_dir=args.test_dir)
 
 
-    elif arg.dataset == "VOC":
-        path_to_voc=""
+    elif args.dataset == "VOC":
+        path_to_voc="/home/tranchon/projects/def-lseoud/tranchon/dataset/"
         traindataset = VOCDataset.VOCDataset(path_to_voc, "train", processed_annotations="VOC_processed_train.json")
         validationdataset = VOCDataset.VOCDataset(path_to_voc, "val", processed_annotations="VOC_processed_val.json")
         testdataset = VOCDataset.VOCDataset(path_to_voc, "test", processed_annotations="VOC_processed_test.json")
@@ -196,9 +210,11 @@ if __name__ == '__main__':
                                               num_workers=args.num_workers, pin_memory=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    if args.leslie:
+    if str.lower(args.leslie)=='true':
+        print("On effectue le test de Leslie")
         leslie_logs = lesli_lr_range(lr_min=args.lr_min, lr_max=args.lr_max, train_loader=train_loader)
-        with open('leslie_test.pickle', 'wb') as handle:
+        plot_leslie(logs=leslie_logs, file_name=str(args.file_name_save))
+        with open('leslie_test_'+str(args.file_name_save)+'.pickle', 'wb') as handle:
             pickle.dump(leslie_logs, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     model = centernet()
@@ -207,6 +223,6 @@ if __name__ == '__main__':
     torch.backends.cudnn.benchmark = False
     epochs = args.epoch
     losts = []
-    logs_training = train_loop(model, scheduler_name=None, epochs=epochs)
-    with open('training_log.pickle', 'wb') as handle:
+    logs_training = train_loop(model, scheduler_name=str(args.scheduler), epochs=epochs)
+    with open('training_log_'+str(args.file_name_save)+'.pickle', 'wb') as handle:
         pickle.dump(logs_training, handle, protocol=pickle.HIGHEST_PROTOCOL)

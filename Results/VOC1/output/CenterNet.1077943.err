@@ -1,0 +1,25 @@
+/var/spool/slurmd/job1077943/slurm_script: line 13: conda: command not found
+Traceback (most recent call last):
+  File "main.py", line 214, in <module>
+    logs_training = train_loop(model, scheduler_name=None, epochs=epochs)
+  File "main.py", line 137, in train_loop
+    logs = train_model(epoch, scheduler=scheduler, epochs=epochs, optimizer=optimizer, logs=logs)
+  File "main.py", line 62, in train_model
+    0.4) * len(index) / len(train_loader)
+  File "/project/6058588/tranchon/run_VOC_1_20210429_1031/average_precision.py", line 30, in get_average_precision
+    return metric_fn.value(iou_thresholds=iou_threshold)['mAP']
+  File "/project/6058588/tranchon/env/lib/python3.6/site-packages/mean_average_precision/adapter.py", line 62, in value
+    return self.metric_fn.value(*args, **kwargs)
+  File "/project/6058588/tranchon/env/lib/python3.6/site-packages/mean_average_precision/multiprocessing.py", line 93, in value
+    return self.metric_fn.value(*args, **kwargs)
+  File "<string>", line 2, in value
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/python/3.6.10/lib/python3.6/multiprocessing/managers.py", line 757, in _callmethod
+    kind, result = conn.recv()
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/python/3.6.10/lib/python3.6/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/python/3.6.10/lib/python3.6/multiprocessing/connection.py", line 407, in _recv_bytes
+    buf = self._recv(4)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/python/3.6.10/lib/python3.6/multiprocessing/connection.py", line 383, in _recv
+    raise EOFError
+EOFError
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=1077943.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.

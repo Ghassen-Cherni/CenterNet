@@ -1,0 +1,704 @@
+args.epoch = 100, args.lr=0.001, args.batch_size=20, args.num_workers=4
+args.train_file=../../dataset/train.csv, args.train_dir=../../dataset/train_images/, args.test_dir=../../dataset/test_images/
+args.augment_data=false, args.leslie=true, args.lr_min=1e-05, args.lr_max=1.0
+On effectue le test de Leslie
+epochs 1/100 
+learning rate :  0.001
+train loss : 5.2567
+maskloss : 2.5836
+regrloss : 2.0966
+offsetloss : 0.5764
+precision : 0.0843
+epochs 2/100 
+learning rate :  0.001
+train loss : 3.9300
+maskloss : 1.4035
+regrloss : 1.9698
+offsetloss : 0.5568
+precision : 0.0000
+epochs 3/100 
+learning rate :  0.001
+train loss : 3.8077
+maskloss : 1.3173
+regrloss : 1.9421
+offsetloss : 0.5482
+precision : 0.0000
+epochs 4/100 
+learning rate :  0.001
+train loss : 3.5312
+maskloss : 1.1146
+regrloss : 1.8824
+offsetloss : 0.5342
+precision : 0.0000
+epochs 5/100 
+learning rate :  0.001
+train loss : 3.1825
+maskloss : 0.9487
+regrloss : 1.7356
+offsetloss : 0.4982
+precision : 0.0000
+epochs 6/100 
+learning rate :  0.001
+train loss : 2.9784
+maskloss : 0.8784
+regrloss : 1.6243
+offsetloss : 0.4757
+precision : 0.0000
+epochs 7/100 
+learning rate :  0.001
+train loss : 2.8479
+maskloss : 0.8444
+regrloss : 1.5436
+offsetloss : 0.4598
+precision : 0.0000
+epochs 8/100 
+learning rate :  0.001
+train loss : 2.7592
+maskloss : 0.8193
+regrloss : 1.4896
+offsetloss : 0.4504
+precision : 0.0000
+epochs 9/100 
+learning rate :  0.001
+train loss : 2.6733
+maskloss : 0.7987
+regrloss : 1.4353
+offsetloss : 0.4392
+precision : 0.0000
+epochs 10/100 
+learning rate :  0.001
+train loss : 2.6077
+maskloss : 0.7828
+regrloss : 1.3935
+offsetloss : 0.4314
+precision : 0.0000
+epochs 11/100 
+learning rate :  0.001
+train loss : 2.5360
+maskloss : 0.7696
+regrloss : 1.3435
+offsetloss : 0.4230
+precision : 15.9832
+epochs 12/100 
+learning rate :  0.001
+train loss : 2.4748
+maskloss : 0.7576
+regrloss : 1.3002
+offsetloss : 0.4171
+precision : 0.0000
+epochs 13/100 
+learning rate :  0.001
+train loss : 2.4082
+maskloss : 0.7438
+regrloss : 1.2549
+offsetloss : 0.4094
+precision : 0.0000
+epochs 14/100 
+learning rate :  0.001
+train loss : 2.3522
+maskloss : 0.7340
+regrloss : 1.2151
+offsetloss : 0.4030
+precision : 0.0000
+epochs 15/100 
+learning rate :  0.001
+train loss : 2.3160
+maskloss : 0.7259
+regrloss : 1.1893
+offsetloss : 0.4008
+precision : 0.0000
+epochs 16/100 
+learning rate :  0.001
+train loss : 2.2524
+maskloss : 0.7131
+regrloss : 1.1449
+offsetloss : 0.3944
+precision : 0.0000
+epochs 17/100 
+learning rate :  0.001
+train loss : 2.2121
+maskloss : 0.7037
+regrloss : 1.1179
+offsetloss : 0.3905
+precision : 0.0000
+epochs 18/100 
+learning rate :  0.001
+train loss : 2.1649
+maskloss : 0.6931
+regrloss : 1.0853
+offsetloss : 0.3865
+precision : 0.0000
+epochs 19/100 
+learning rate :  0.001
+train loss : 2.1150
+maskloss : 0.6803
+regrloss : 1.0533
+offsetloss : 0.3814
+precision : 0.0000
+epochs 20/100 
+learning rate :  0.001
+train loss : 2.0711
+maskloss : 0.6659
+regrloss : 1.0275
+offsetloss : 0.3776
+precision : 0.0000
+epochs 21/100 
+learning rate :  0.001
+train loss : 2.0458
+maskloss : 0.6548
+regrloss : 1.0157
+offsetloss : 0.3753
+precision : 34.4536
+epochs 22/100 
+learning rate :  0.001
+train loss : 2.0298
+maskloss : 0.6444
+regrloss : 1.0109
+offsetloss : 0.3745
+precision : 0.0000
+epochs 23/100 
+learning rate :  0.001
+train loss : 1.9546
+maskloss : 0.6140
+regrloss : 0.9748
+offsetloss : 0.3657
+precision : 0.0000
+epochs 24/100 
+learning rate :  0.001
+train loss : 1.8897
+maskloss : 0.5873
+regrloss : 0.9434
+offsetloss : 0.3590
+precision : 0.0000
+epochs 25/100 
+learning rate :  0.001
+train loss : 1.8222
+maskloss : 0.5550
+regrloss : 0.9137
+offsetloss : 0.3535
+precision : 0.0000
+epochs 26/100 
+learning rate :  0.001
+train loss : 1.7335
+maskloss : 0.5231
+regrloss : 0.8684
+offsetloss : 0.3420
+precision : 0.0000
+epochs 27/100 
+learning rate :  0.001
+train loss : 1.6546
+maskloss : 0.4961
+regrloss : 0.8264
+offsetloss : 0.3321
+precision : 0.0000
+epochs 28/100 
+learning rate :  0.001
+train loss : 1.6125
+maskloss : 0.4813
+regrloss : 0.8043
+offsetloss : 0.3270
+precision : 0.0000
+epochs 29/100 
+learning rate :  0.001
+train loss : 1.5237
+maskloss : 0.4545
+regrloss : 0.7533
+offsetloss : 0.3159
+precision : 0.0000
+epochs 30/100 
+learning rate :  0.001
+train loss : 1.4513
+maskloss : 0.4306
+regrloss : 0.7130
+offsetloss : 0.3077
+precision : 0.0000
+epochs 31/100 
+learning rate :  0.001
+train loss : 1.3713
+maskloss : 0.4077
+regrloss : 0.6662
+offsetloss : 0.2973
+precision : 50.1572
+epochs 32/100 
+learning rate :  0.001
+train loss : 1.3128
+maskloss : 0.3895
+regrloss : 0.6326
+offsetloss : 0.2907
+precision : 0.0000
+epochs 33/100 
+learning rate :  0.001
+train loss : 1.2779
+maskloss : 0.3752
+regrloss : 0.6154
+offsetloss : 0.2873
+precision : 0.0000
+epochs 34/100 
+learning rate :  0.001
+train loss : 1.2235
+maskloss : 0.3603
+regrloss : 0.5821
+offsetloss : 0.2810
+precision : 0.0000
+epochs 35/100 
+learning rate :  0.001
+train loss : 1.1918
+maskloss : 0.3450
+regrloss : 0.5704
+offsetloss : 0.2765
+precision : 0.0000
+epochs 36/100 
+learning rate :  0.001
+train loss : 1.1490
+maskloss : 0.3315
+regrloss : 0.5455
+offsetloss : 0.2720
+precision : 0.0000
+epochs 37/100 
+learning rate :  0.001
+train loss : 1.1185
+maskloss : 0.3192
+regrloss : 0.5307
+offsetloss : 0.2685
+precision : 0.0000
+epochs 38/100 
+learning rate :  0.001
+train loss : 1.0685
+maskloss : 0.3014
+regrloss : 0.5059
+offsetloss : 0.2613
+precision : 0.0000
+epochs 39/100 
+learning rate :  0.001
+train loss : 1.0275
+maskloss : 0.2864
+regrloss : 0.4847
+offsetloss : 0.2564
+precision : 0.0000
+epochs 40/100 
+learning rate :  0.001
+train loss : 1.0208
+maskloss : 0.2836
+regrloss : 0.4813
+offsetloss : 0.2559
+precision : 0.0000
+epochs 41/100 
+learning rate :  0.001
+train loss : 0.9725
+maskloss : 0.2655
+regrloss : 0.4579
+offsetloss : 0.2492
+precision : 55.3346
+epochs 42/100 
+learning rate :  0.001
+train loss : 0.9529
+maskloss : 0.2570
+regrloss : 0.4481
+offsetloss : 0.2479
+precision : 0.0000
+epochs 43/100 
+learning rate :  0.001
+train loss : 0.9355
+maskloss : 0.2492
+regrloss : 0.4398
+offsetloss : 0.2466
+precision : 0.0000
+epochs 44/100 
+learning rate :  0.001
+train loss : 0.9079
+maskloss : 0.2381
+regrloss : 0.4269
+offsetloss : 0.2429
+precision : 0.0000
+epochs 45/100 
+learning rate :  0.001
+train loss : 0.8863
+maskloss : 0.2291
+regrloss : 0.4171
+offsetloss : 0.2402
+precision : 0.0000
+epochs 46/100 
+learning rate :  0.001
+train loss : 0.8742
+maskloss : 0.2203
+regrloss : 0.4161
+offsetloss : 0.2379
+precision : 0.0000
+epochs 47/100 
+learning rate :  0.001
+train loss : 0.8346
+maskloss : 0.2068
+regrloss : 0.3952
+offsetloss : 0.2326
+precision : 0.0000
+epochs 48/100 
+learning rate :  0.001
+train loss : 0.8107
+maskloss : 0.1936
+regrloss : 0.3876
+offsetloss : 0.2295
+precision : 0.0000
+epochs 49/100 
+learning rate :  0.001
+train loss : 0.7864
+maskloss : 0.1867
+regrloss : 0.3734
+offsetloss : 0.2264
+precision : 0.0000
+epochs 50/100 
+learning rate :  0.001
+train loss : 0.7735
+maskloss : 0.1805
+regrloss : 0.3677
+offsetloss : 0.2253
+precision : 0.0000
+epochs 51/100 
+learning rate :  0.001
+train loss : 0.7711
+maskloss : 0.1779
+regrloss : 0.3681
+offsetloss : 0.2252
+precision : 56.1106
+epochs 52/100 
+learning rate :  0.001
+train loss : 0.7560
+maskloss : 0.1715
+regrloss : 0.3613
+offsetloss : 0.2233
+precision : 0.0000
+epochs 53/100 
+learning rate :  0.001
+train loss : 0.7234
+maskloss : 0.1568
+regrloss : 0.3485
+offsetloss : 0.2180
+precision : 0.0000
+epochs 54/100 
+learning rate :  0.001
+train loss : 0.6971
+maskloss : 0.1473
+regrloss : 0.3351
+offsetloss : 0.2146
+precision : 0.0000
+epochs 55/100 
+learning rate :  0.001
+train loss : 0.6918
+maskloss : 0.1445
+regrloss : 0.3338
+offsetloss : 0.2134
+precision : 0.0000
+epochs 56/100 
+learning rate :  0.001
+train loss : 0.6821
+maskloss : 0.1373
+regrloss : 0.3325
+offsetloss : 0.2124
+precision : 0.0000
+epochs 57/100 
+learning rate :  0.001
+train loss : 0.6672
+maskloss : 0.1329
+regrloss : 0.3238
+offsetloss : 0.2105
+precision : 0.0000
+epochs 58/100 
+learning rate :  0.001
+train loss : 0.6599
+maskloss : 0.1291
+regrloss : 0.3211
+offsetloss : 0.2097
+precision : 0.0000
+epochs 59/100 
+learning rate :  0.001
+train loss : 0.6379
+maskloss : 0.1197
+regrloss : 0.3119
+offsetloss : 0.2063
+precision : 0.0000
+epochs 60/100 
+learning rate :  0.001
+train loss : 0.6348
+maskloss : 0.1169
+regrloss : 0.3118
+offsetloss : 0.2062
+precision : 0.0000
+epochs 61/100 
+learning rate :  0.001
+train loss : 0.6230
+maskloss : 0.1126
+regrloss : 0.3062
+offsetloss : 0.2042
+precision : 56.5660
+epochs 62/100 
+learning rate :  0.001
+train loss : 0.6067
+maskloss : 0.1058
+regrloss : 0.2997
+offsetloss : 0.2013
+precision : 0.0000
+epochs 63/100 
+learning rate :  0.001
+train loss : 0.6033
+maskloss : 0.1024
+regrloss : 0.3000
+offsetloss : 0.2009
+precision : 0.0000
+epochs 64/100 
+learning rate :  0.001
+train loss : 0.5949
+maskloss : 0.0999
+regrloss : 0.2946
+offsetloss : 0.2003
+precision : 0.0000
+epochs 65/100 
+learning rate :  0.001
+train loss : 0.5753
+maskloss : 0.0952
+regrloss : 0.2834
+offsetloss : 0.1967
+precision : 0.0000
+epochs 66/100 
+learning rate :  0.001
+train loss : 0.5708
+maskloss : 0.0923
+regrloss : 0.2830
+offsetloss : 0.1955
+precision : 0.0000
+epochs 67/100 
+learning rate :  0.001
+train loss : 0.5695
+maskloss : 0.0919
+regrloss : 0.2822
+offsetloss : 0.1953
+precision : 0.0000
+epochs 68/100 
+learning rate :  0.001
+train loss : 0.5529
+maskloss : 0.0851
+regrloss : 0.2748
+offsetloss : 0.1930
+precision : 0.0000
+epochs 69/100 
+learning rate :  0.001
+train loss : 0.5423
+maskloss : 0.0809
+regrloss : 0.2705
+offsetloss : 0.1909
+precision : 0.0000
+epochs 70/100 
+learning rate :  0.001
+train loss : 0.5366
+maskloss : 0.0778
+regrloss : 0.2695
+offsetloss : 0.1893
+precision : 0.0000
+epochs 71/100 
+learning rate :  0.001
+train loss : 0.5404
+maskloss : 0.0799
+regrloss : 0.2709
+offsetloss : 0.1897
+precision : 57.3569
+epochs 72/100 
+learning rate :  0.001
+train loss : 0.5109
+maskloss : 0.0703
+regrloss : 0.2558
+offsetloss : 0.1848
+precision : 0.0000
+epochs 73/100 
+learning rate :  0.001
+train loss : 0.5122
+maskloss : 0.0697
+regrloss : 0.2571
+offsetloss : 0.1854
+precision : 0.0000
+epochs 74/100 
+learning rate :  0.001
+train loss : 0.5102
+maskloss : 0.0694
+regrloss : 0.2562
+offsetloss : 0.1845
+precision : 0.0000
+epochs 75/100 
+learning rate :  0.001
+train loss : 0.5077
+maskloss : 0.0677
+regrloss : 0.2563
+offsetloss : 0.1836
+precision : 0.0000
+epochs 76/100 
+learning rate :  0.001
+train loss : 0.4926
+maskloss : 0.0631
+regrloss : 0.2486
+offsetloss : 0.1809
+precision : 0.0000
+epochs 77/100 
+learning rate :  0.001
+train loss : 0.4969
+maskloss : 0.0639
+regrloss : 0.2513
+offsetloss : 0.1816
+precision : 0.0000
+epochs 78/100 
+learning rate :  0.001
+train loss : 0.4796
+maskloss : 0.0585
+regrloss : 0.2430
+offsetloss : 0.1781
+precision : 0.0000
+epochs 79/100 
+learning rate :  0.001
+train loss : 0.4848
+maskloss : 0.0589
+regrloss : 0.2469
+offsetloss : 0.1790
+precision : 0.0000
+epochs 80/100 
+learning rate :  0.001
+train loss : 0.4786
+maskloss : 0.0575
+regrloss : 0.2445
+offsetloss : 0.1766
+precision : 0.0000
+epochs 81/100 
+learning rate :  0.001
+train loss : 0.4720
+maskloss : 0.0558
+regrloss : 0.2398
+offsetloss : 0.1764
+precision : 57.4084
+epochs 82/100 
+learning rate :  0.001
+train loss : 0.4635
+maskloss : 0.0532
+regrloss : 0.2357
+offsetloss : 0.1745
+precision : 0.0000
+epochs 83/100 
+learning rate :  0.001
+train loss : 0.4582
+maskloss : 0.0515
+regrloss : 0.2333
+offsetloss : 0.1733
+precision : 0.0000
+epochs 84/100 
+learning rate :  0.001
+train loss : 0.4549
+maskloss : 0.0490
+regrloss : 0.2335
+offsetloss : 0.1724
+precision : 0.0000
+epochs 85/100 
+learning rate :  0.001
+train loss : 0.4477
+maskloss : 0.0485
+regrloss : 0.2289
+offsetloss : 0.1703
+precision : 0.0000
+epochs 86/100 
+learning rate :  0.001
+train loss : 0.4355
+maskloss : 0.0448
+regrloss : 0.2221
+offsetloss : 0.1686
+precision : 0.0000
+epochs 87/100 
+learning rate :  0.001
+train loss : 0.4378
+maskloss : 0.0446
+regrloss : 0.2249
+offsetloss : 0.1683
+precision : 0.0000
+epochs 88/100 
+learning rate :  0.001
+train loss : 0.4308
+maskloss : 0.0438
+regrloss : 0.2208
+offsetloss : 0.1662
+precision : 0.0000
+epochs 89/100 
+learning rate :  0.001
+train loss : 0.4334
+maskloss : 0.0458
+regrloss : 0.2200
+offsetloss : 0.1676
+precision : 0.0000
+epochs 90/100 
+learning rate :  0.001
+train loss : 0.4203
+maskloss : 0.0413
+regrloss : 0.2148
+offsetloss : 0.1642
+precision : 0.0000
+epochs 91/100 
+learning rate :  0.001
+train loss : 0.4269
+maskloss : 0.0420
+regrloss : 0.2192
+offsetloss : 0.1657
+precision : 58.1535
+epochs 92/100 
+learning rate :  0.001
+train loss : 0.4061
+maskloss : 0.0372
+regrloss : 0.2081
+offsetloss : 0.1609
+precision : 0.0000
+epochs 93/100 
+learning rate :  0.001
+train loss : 0.4026
+maskloss : 0.0358
+regrloss : 0.2074
+offsetloss : 0.1594
+precision : 0.0000
+epochs 94/100 
+learning rate :  0.001
+train loss : 0.4053
+maskloss : 0.0375
+regrloss : 0.2084
+offsetloss : 0.1594
+precision : 0.0000
+epochs 95/100 
+learning rate :  0.001
+train loss : 0.4146
+maskloss : 0.0400
+regrloss : 0.2126
+offsetloss : 0.1620
+precision : 0.0000
+epochs 96/100 
+learning rate :  0.001
+train loss : 0.4087
+maskloss : 0.0386
+regrloss : 0.2091
+offsetloss : 0.1610
+precision : 0.0000
+epochs 97/100 
+learning rate :  0.001
+train loss : 0.3981
+maskloss : 0.0346
+regrloss : 0.2047
+offsetloss : 0.1589
+precision : 0.0000
+epochs 98/100 
+learning rate :  0.001
+train loss : 0.3936
+maskloss : 0.0335
+regrloss : 0.2028
+offsetloss : 0.1574
+precision : 0.0000
+epochs 99/100 
+learning rate :  0.001
+train loss : 0.3818
+maskloss : 0.0307
+regrloss : 0.1962
+offsetloss : 0.1549
+precision : 0.0000
+epochs 100/100 
+learning rate :  0.001
+train loss : 0.3809
+maskloss : 0.0303
+regrloss : 0.1970
+offsetloss : 0.1536
+precision : 0.0000

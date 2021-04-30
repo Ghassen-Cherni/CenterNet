@@ -206,14 +206,16 @@ def generate_heatmaps(image, label):
 
         offset_x[center_y_resized_int, center_x_resized_int] = center_x_resized_float - center_x_resized_int
         offset_y[center_y_resized_int, center_x_resized_int] = center_y_resized_float - center_y_resized_int
+        object_size_x[center_y_resized_int, center_x_resized_int] = (size_x / w_init * 128) / 2
+        object_size_y[center_y_resized_int, center_x_resized_int] = (size_y / h_init * 128) / 2
 
         # creating patches
-        y1 = max(center_y_resized_int - 5, 0)
-        y2 = min(center_y_resized_int + 5, 128)
-        x1 = max(center_x_resized_int - 5, 0)
-        x2 = min(center_x_resized_int + 5, 128)
-        object_size_x[y1:y2, x1:x2] = (x_max - x_min) * w_scale  # we store the size of the object in the resized image
-        object_size_y[y1:y2, x1:x2] = (y_max - y_min) * h_scale
+        # y1 = max(center_y_resized_int - 5, 0)
+        # y2 = min(center_y_resized_int + 5, 128)
+        # x1 = max(center_x_resized_int - 5, 0)
+        # x2 = min(center_x_resized_int + 5, 128)
+        # object_size_x[y1:y2, x1:x2] = (x_max - x_min) * w_scale  # we store the size of the object in the resized image
+        # object_size_y[y1:y2, x1:x2] = (y_max - y_min) * h_scale
 
     offset = np.stack([offset_x, offset_y])
     object_size = np.stack([object_size_x, object_size_y])
